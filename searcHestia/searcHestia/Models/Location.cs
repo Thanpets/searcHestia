@@ -20,9 +20,9 @@ namespace searcHestia.Models
         [StringLength(6, MinimumLength = 5, ErrorMessage = "Post Code must be at least 5 characters.")]
         public string ZIPCode { get; set; }
 
-        public double LatCoordinate { get; set; }
+        public double? LatCoordinate { get; set; }
 
-        public double LngCoordinate { get; set; }
+        public double? LngCoordinate { get; set; }
 
         public Region Region { get; set; }
 

@@ -141,11 +141,19 @@
     <Compile Include="Migrations\201904141738592_Initial.Designer.cs">
       <DependentUpon>201904141738592_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904241522148_AddReservation.cs" />
+    <Compile Include="Migrations\201904241522148_AddReservation.Designer.cs">
+      <DependentUpon>201904241522148_AddReservation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Amentity.cs" />
     <Compile Include="Models\Availability.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\Pricing.cs" />
+    <Compile Include="Models\RatCategory.cs" />
+    <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\Region.cs" />
+    <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\SearchestiaContext.cs" />
     <Compile Include="Models\VacProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -209,6 +217,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201904141738592_Initial.resx">
       <DependentUpon>201904141738592_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904241522148_AddReservation.resx">
+      <DependentUpon>201904241522148_AddReservation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

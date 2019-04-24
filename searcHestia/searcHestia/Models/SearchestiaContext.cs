@@ -41,6 +41,26 @@ namespace searcHestia.Models
         /// </summary>
         public DbSet<Availability> Availabilities { get; set; }
 
+        /// <summary>
+        /// Collection managing ratings
+        /// </summary>
+        public DbSet<Rating> Ratings { get; set; }
+
+        /// <summary>
+        /// Collection managing rating's categories
+        /// </summary>
+        public DbSet<RatCategory> RatCategories { get; set; }
+
+        /// <summary>
+        /// Collection managing reservations
+        /// </summary>
+        public DbSet<Reservation> Reservations { get; set; }
+
+        /// <summary>
+        /// Collection managing pricing
+        /// </summary>
+        public DbSet<Pricing> Pricings { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VacProperty>()
@@ -48,6 +68,16 @@ namespace searcHestia.Models
                 .Map(t => t.MapLeftKey("VacPropertyId")
                     .MapRightKey("AmentityId")
                     .ToTable("PropertyAmentity"));
+
+            /* modelBuilder.Entity<Rating>()
+               .HasIndex(r => r.ReservationId).IsUnique(); */
+
+            modelBuilder.Entity<Reservation>()
+                 .HasOptional(r => r.Rating)
+                 .WithRequired(ra => ra.Reservation)
+                 .Map(c => c.MapKey("ReservationId"));
+                 //using different FK in the dependent entity than the PK
+                 //other approach: Shared PK Association
         }
     }
 }
