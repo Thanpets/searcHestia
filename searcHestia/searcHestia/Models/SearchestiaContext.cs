@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace searcHestia.Models
     /// <summary>
 	/// Used to access and persist data to the database
 	/// </summary>
-	public class SearchestiaContext : DbContext
+	public class SearchestiaContext : IdentityDbContext<ApplicationUser>
     {
         // We need to replace this value with the appropriate value that points to the local database
         const string connectionString = @"Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=searcHestia;Integrated Security=True";
@@ -69,8 +70,20 @@ namespace searcHestia.Models
                     .MapRightKey("AmentityId")
                     .ToTable("PropertyAmentity"));
 
+            modelBuilder.Entity<VacProperty>()
+                 .HasRequired(c => c.ApplicationUser)
+                 .WithMany(t => t.VacProperties)
+                 .Map(m => m.MapKey("UserId"))
+                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Reservation>()
+                 .HasRequired(c => c.ApplicationUser)
+                 .WithMany(t => t.Reservations)
+                 .Map(m => m.MapKey("UserId"))
+                 .WillCascadeOnDelete(false);
+
             /* modelBuilder.Entity<Rating>()
-               .HasIndex(r => r.ReservationId).IsUnique(); */
+            .HasIndex(r => r.ReservationId).IsUnique(); */
 
             modelBuilder.Entity<Reservation>()
                  .HasOptional(r => r.Rating)
@@ -78,6 +91,8 @@ namespace searcHestia.Models
                  .Map(c => c.MapKey("ReservationId"));
                  //using different FK in the dependent entity than the PK
                  //other approach: Shared PK Association
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

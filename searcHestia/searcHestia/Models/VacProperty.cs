@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -36,10 +37,9 @@ namespace searcHestia.Models
         [Display(Name = "Vacation Property's Type")]
         public VPType VPType { get; set; }
 
-        //public int UserId { get; set; }
-
         public Location Location { get; set; }
         public virtual ICollection<Amentity> Amentities { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
 
     }
 }
