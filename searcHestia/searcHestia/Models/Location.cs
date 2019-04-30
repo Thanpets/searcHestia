@@ -11,8 +11,8 @@ namespace searcHestia.Models
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Region")]
-        public int RegionId { get; set; }
+        [Display(Name = "City")]
+        public int CityId { get; set; }
 
         [StringLength(50)]
         public string Address { get; set; }
@@ -24,7 +24,8 @@ namespace searcHestia.Models
 
         public double? LngCoordinate { get; set; }
 
-        public Region Region { get; set; }
+        public City City { get; set; }
+
 
     }
 }

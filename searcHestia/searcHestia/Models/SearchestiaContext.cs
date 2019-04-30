@@ -23,6 +23,11 @@ namespace searcHestia.Models
         public DbSet<Region> Regions { get; set; }
 
         /// <summary>
+        /// Collection managing cities
+        /// </summary>
+        public DbSet<City> Cities { get; set; }
+
+        /// <summary>
         /// Collection managing locations
         /// </summary>
         public DbSet<Location> Locations { get; set; }

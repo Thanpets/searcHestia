@@ -182,6 +182,10 @@
     <Compile Include="Migrations\201904251430128_AddUserFKs.Designer.cs">
       <DependentUpon>201904251430128_AddUserFKs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201904301255012_AddCity.cs" />
+    <Compile Include="Migrations\201904301255012_AddCity.Designer.cs">
+      <DependentUpon>201904301255012_AddCity.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Amenity.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -189,6 +193,7 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\Availability.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Pricing.cs" />
     <Compile Include="Models\RatCategory.cs" />
@@ -284,6 +289,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904251430128_AddUserFKs.resx">
       <DependentUpon>201904251430128_AddUserFKs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904301255012_AddCity.resx">
+      <DependentUpon>201904301255012_AddCity.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
