@@ -6,7 +6,7 @@ using System.Web;
 
 namespace searcHestia.Models
 {
-    public class Amentity
+    public class Amenity
     {
         public int Id { get; set; }
 

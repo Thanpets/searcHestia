@@ -38,7 +38,7 @@ namespace searcHestia.Models
         public VPType VPType { get; set; }
 
         public Location Location { get; set; }
-        public virtual ICollection<Amentity> Amentities { get; set; }
+        public virtual ICollection<Amenity> Amenities { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 
     }

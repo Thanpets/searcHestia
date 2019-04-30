@@ -183,7 +183,7 @@
       <DependentUpon>201904251430128_AddUserFKs.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Amentity.cs" />
+    <Compile Include="Models\Amenity.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
     <Compile Include="Models\ApplicationSignInManager.cs" />
     <Compile Include="Models\ApplicationUser.cs" />

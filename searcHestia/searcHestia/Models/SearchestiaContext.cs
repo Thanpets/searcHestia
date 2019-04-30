@@ -30,7 +30,7 @@ namespace searcHestia.Models
         /// <summary>
         /// Collection managing amentities
         /// </summary>
-        public DbSet<Amentity> Amentities { get; set; }
+        public DbSet<Amenity> Amenities { get; set; }
 
         /// <summary>
         /// Collection managing vacation properties
@@ -65,10 +65,10 @@ namespace searcHestia.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VacProperty>()
-                .HasMany(c => c.Amentities).WithMany(i => i.VacProperties)
+                .HasMany(c => c.Amenities).WithMany(i => i.VacProperties)
                 .Map(t => t.MapLeftKey("VacPropertyId")
-                    .MapRightKey("AmentityId")
-                    .ToTable("PropertyAmentity"));
+                    .MapRightKey("AmenityId")
+                    .ToTable("PropertyAmenity"));
 
             modelBuilder.Entity<VacProperty>()
                  .HasRequired(c => c.ApplicationUser)
