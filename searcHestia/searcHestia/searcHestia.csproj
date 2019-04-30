@@ -161,10 +161,13 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AmenitiesController.cs" />
+    <Compile Include="Controllers\AvailabilitiesController.cs" />
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\RegionsController.cs" />
+    <Compile Include="Controllers\VacPropertiesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -274,6 +277,21 @@
     <Content Include="Views\Locations\Details.cshtml" />
     <Content Include="Views\Locations\Edit.cshtml" />
     <Content Include="Views\Locations\Index.cshtml" />
+    <Content Include="Views\Amenities\Create.cshtml" />
+    <Content Include="Views\Amenities\Delete.cshtml" />
+    <Content Include="Views\Amenities\Details.cshtml" />
+    <Content Include="Views\Amenities\Edit.cshtml" />
+    <Content Include="Views\Amenities\Index.cshtml" />
+    <Content Include="Views\Availabilities\Create.cshtml" />
+    <Content Include="Views\Availabilities\Delete.cshtml" />
+    <Content Include="Views\Availabilities\Details.cshtml" />
+    <Content Include="Views\Availabilities\Edit.cshtml" />
+    <Content Include="Views\Availabilities\Index.cshtml" />
+    <Content Include="Views\VacProperties\Create.cshtml" />
+    <Content Include="Views\VacProperties\Delete.cshtml" />
+    <Content Include="Views\VacProperties\Details.cshtml" />
+    <Content Include="Views\VacProperties\Edit.cshtml" />
+    <Content Include="Views\VacProperties\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
