@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace searcHestia.Models
+namespace searcHestia.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {
