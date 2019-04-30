@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using searcHestia.Models;
+using Microsoft.AspNet.Identity;
+
 
 namespace searcHestia.Controllers
 {
@@ -52,6 +54,7 @@ namespace searcHestia.Controllers
         {
             if (ModelState.IsValid)
             {
+                vacProperty.ApplicationUser.Id = User.Identity.GetUserId(); 
                 db.VacProperties.Add(vacProperty);
                 db.SaveChanges();
                 return RedirectToAction("Index");
