@@ -25,6 +25,7 @@ namespace searcHestia.Models
         [Required(ErrorMessage = "Please, provide a title")]
         public string Title { get; set; }
 
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [Display(Name = "Location")]
@@ -36,6 +37,9 @@ namespace searcHestia.Models
         [DisplayFormat(NullDisplayText = "No type")]
         [Display(Name = "Vacation Property's Type")]
         public VPType VPType { get; set; }
+
+        [Display(Name = "Price Per Night")]
+        public double PricePN { get; set; }
 
         public Location Location { get; set; }
         public virtual ICollection<Amenity> Amenities { get; set; }

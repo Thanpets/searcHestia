@@ -128,5 +128,21 @@ namespace searcHestia.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //---------------------------------------------------------
+        // CUSTOM METHODS
+        //---------------------------------------------------------
+        //[AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult GetAddressesList(string ZIP)
+        {
+
+            var addressList = db.Locations.Where(p => p.ZIPCode.Equals(ZIP)).Select(p => new { p.Id, p.Address }).ToList();
+
+            //(from l in db.Locations
+            //where l.ZIPCode.Equals(ZIP)
+            //select new { Id = l.Id, Address = l.Address }).ToList();
+
+            return Json(addressList, JsonRequestBehavior.AllowGet);
+        }
     }
 }

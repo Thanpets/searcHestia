@@ -12,6 +12,7 @@ using System.Security.Claims;
 
 namespace searcHestia.Controllers
 {
+    [Authorize]
     public class VacPropertiesController : Controller
     {
         private SearchestiaContext db = new SearchestiaContext();
@@ -24,6 +25,7 @@ namespace searcHestia.Controllers
             return View(vacProperties.ToList());
         }
 
+        [AllowAnonymous]
         // GET: VacProperties/Details/5
         public ActionResult Details(int? id)
         {
@@ -31,7 +33,7 @@ namespace searcHestia.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VacProperty vacProperty = db.VacProperties.Find(id);
+            VacProperty vacProperty = db.VacProperties.Include(l => l.Location.City.Region).Where(v => v.Id == id).FirstOrDefault();
             if (vacProperty == null)
             {
                 return HttpNotFound();
@@ -43,6 +45,7 @@ namespace searcHestia.Controllers
         // GET: VacProperties/Create
         public ActionResult Create()
         {
+            ViewBag.CityId = new SelectList(db.Cities, "Id", "Name");
             ViewBag.LocationId = new SelectList(db.Locations, "Id", "Address");
             return View();
         }
@@ -52,7 +55,7 @@ namespace searcHestia.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description,LocationId,MaxOccupancy,VPType")] VacProperty vacProperty)
+        public ActionResult Create([Bind(Include = "Id,Title,Description,LocationId,MaxOccupancy,VPType,PricePN")] VacProperty vacProperty, string address, string zipcode)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +95,7 @@ namespace searcHestia.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Description,LocationId,MaxOccupancy,VPType")] VacProperty vacProperty)
+        public ActionResult Edit([Bind(Include = "Id,Title,Description,LocationId,MaxOccupancy,VPType,PricePN")] VacProperty vacProperty)
         {
             if (ModelState.IsValid)
             {

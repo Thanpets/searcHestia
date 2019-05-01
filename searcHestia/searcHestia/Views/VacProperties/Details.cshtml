@@ -11,13 +11,6 @@
     <h4>VacProperty</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Location.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Location.Address)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Title)
@@ -51,9 +44,41 @@
             @Html.DisplayFor(model => model.VPType)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.PricePN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PricePN)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Region")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.City.Region.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("City")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.City.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.Address)
+        </dd>
+
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", null, null, null, new { href = Request.UrlReferrer })
 </p>

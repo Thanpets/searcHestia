@@ -195,6 +195,10 @@
     <Compile Include="Migrations\201905010839595_AddUserNameProperty.Designer.cs">
       <DependentUpon>201905010839595_AddUserNameProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905011310040_AddDefaultPricePerNight.cs" />
+    <Compile Include="Migrations\201905011310040_AddDefaultPricePerNight.Designer.cs">
+      <DependentUpon>201905011310040_AddDefaultPricePerNight.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Amenity.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -298,6 +302,7 @@
     <Content Include="Views\VacProperties\Edit.cshtml" />
     <Content Include="Views\VacProperties\Index.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Home\SearchResult.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -331,6 +336,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905010839595_AddUserNameProperty.resx">
       <DependentUpon>201905010839595_AddUserNameProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905011310040_AddDefaultPricePerNight.resx">
+      <DependentUpon>201905011310040_AddDefaultPricePerNight.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

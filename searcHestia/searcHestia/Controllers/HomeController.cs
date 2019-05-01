@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
+using searcHestia.Models;
+using searcHestia.ViewModels;
 
 namespace searcHestia.Controllers
 {
     public class HomeController : Controller
     {
+        private SearchestiaContext db = new SearchestiaContext();
+
+        //GET
         public ActionResult Index()
         {
             return View();
@@ -16,6 +22,15 @@ namespace searcHestia.Controllers
         public ActionResult Search()
         {
             return View();
+        }
+
+        [HttpPost]
+        //[ActionName("SearchResult")]
+        public ActionResult Search(RSearchViewModel search)
+        {
+            var vpresult = db.VacProperties.Include(l => l.Location);
+
+            return View("SearchResult", vpresult.ToList());
         }
 
 
