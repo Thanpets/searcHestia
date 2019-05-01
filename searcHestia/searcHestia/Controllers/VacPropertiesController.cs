@@ -8,13 +8,14 @@ using System.Web;
 using System.Web.Mvc;
 using searcHestia.Models;
 using Microsoft.AspNet.Identity;
-
+using System.Security.Claims;
 
 namespace searcHestia.Controllers
 {
     public class VacPropertiesController : Controller
     {
         private SearchestiaContext db = new SearchestiaContext();
+        //private readonly UserManager<ApplicationUser> _userManager;
 
         // GET: VacProperties
         public ActionResult Index()
@@ -38,6 +39,7 @@ namespace searcHestia.Controllers
             return View(vacProperty);
         }
 
+        //[Authorize(Roles = "Owner")]
         // GET: VacProperties/Create
         public ActionResult Create()
         {
@@ -54,7 +56,12 @@ namespace searcHestia.Controllers
         {
             if (ModelState.IsValid)
             {
-                vacProperty.ApplicationUser.Id = User.Identity.GetUserId(); 
+                //var currentUserId = User.Identity.GetUserId(); //get id after redirecting only
+                vacProperty.ApplicationUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+
+                //var Grant = SignInManager.AuthenticationManager.AuthenticationResponseGrant;
+                //string UserId = Grant.Identity.GetUserId();
+
                 db.VacProperties.Add(vacProperty);
                 db.SaveChanges();
                 return RedirectToAction("Index");

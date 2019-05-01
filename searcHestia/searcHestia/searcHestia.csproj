@@ -191,6 +191,10 @@
     <Compile Include="Migrations\201904301255012_AddCity.Designer.cs">
       <DependentUpon>201904301255012_AddCity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905010839595_AddUserNameProperty.cs" />
+    <Compile Include="Migrations\201905010839595_AddUserNameProperty.Designer.cs">
+      <DependentUpon>201905010839595_AddUserNameProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Amenity.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -324,6 +328,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904301255012_AddCity.resx">
       <DependentUpon>201904301255012_AddCity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905010839595_AddUserNameProperty.resx">
+      <DependentUpon>201905010839595_AddUserNameProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

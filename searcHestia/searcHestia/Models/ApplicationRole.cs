@@ -10,6 +10,6 @@ namespace searcHestia.Models
     {
         public ApplicationRole() : base() { }
         public ApplicationRole(string name) : base(name) { }
-        // extra properties here 
+        // extra properties here
     }
 }

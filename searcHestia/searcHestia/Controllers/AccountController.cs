@@ -11,7 +11,7 @@ using Microsoft.Owin.Security;
 using searcHestia.Models;
 using searcHestia.ViewModels;
 
-namespace Greenfield.Identity.Controllers
+namespace searcHestia.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -159,6 +159,7 @@ namespace Greenfield.Identity.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    result = await UserManager.AddToRoleAsync(user.Id, "Renter");
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
