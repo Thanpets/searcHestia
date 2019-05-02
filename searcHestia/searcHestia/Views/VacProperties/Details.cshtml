@@ -78,6 +78,9 @@
 
     </dl>
 </div>
+
+<p>@Html.ActionLink("Reservation", "Create", "Reservations", null, new { @class = "btn btn-primary col-md-offset-2" })</p>
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", null, null, null, new { href = Request.UrlReferrer })

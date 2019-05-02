@@ -1,0 +1,92 @@
+﻿@model searcHestia.Models.Reservation
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Reservation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VacProperty.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VacProperty.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EndDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EndDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OccupantsNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OccupantsNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateBooked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateBooked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CustComments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CustComments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PricePN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PricePN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rating.Id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Rating.Id)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

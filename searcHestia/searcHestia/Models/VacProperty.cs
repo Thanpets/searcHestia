@@ -32,6 +32,7 @@ namespace searcHestia.Models
         [Required]
         public int LocationId { get; set; }
 
+        [Range(1, 10, ErrorMessage = "Only positive number allowed")]
         public int MaxOccupancy { get; set; }
 
         [DisplayFormat(NullDisplayText = "No type")]
@@ -43,6 +44,7 @@ namespace searcHestia.Models
 
         public Location Location { get; set; }
         public virtual ICollection<Amenity> Amenities { get; set; }
+        public virtual ICollection<Gallery> Galleries { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
 
     }

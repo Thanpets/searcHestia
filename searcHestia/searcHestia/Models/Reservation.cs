@@ -31,6 +31,7 @@ namespace searcHestia.Models
         public DateTime EndDate { get; set; }
 
         [Display(Name = "Number of Occupants")]
+        [Range(1, 10, ErrorMessage = "Only positive number allowed")]
         public int OccupantsNum { get; set; }
 
         [Display(Name = "Date of Booking")]
@@ -50,5 +51,10 @@ namespace searcHestia.Models
         public VacProperty VacProperty { get; set; }
         public Rating Rating { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public Reservation()
+        {
+            DateBooked = DateTime.Now;
+        }
     }
 }

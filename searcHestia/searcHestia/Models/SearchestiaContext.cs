@@ -67,6 +67,11 @@ namespace searcHestia.Models
         /// </summary>
         public DbSet<Pricing> Pricings { get; set; }
 
+        /// <summary>
+        /// Collection managing galleries
+        /// </summary>
+        public DbSet<Gallery> Galleries { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VacProperty>()

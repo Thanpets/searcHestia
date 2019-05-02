@@ -168,7 +168,10 @@
     <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
+    <Compile Include="Controllers\RatCategoriesController.cs" />
+    <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\RegionsController.cs" />
+    <Compile Include="Controllers\ReservationsController.cs" />
     <Compile Include="Controllers\VacPropertiesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -201,6 +204,10 @@
     <Compile Include="Migrations\201905011310040_AddDefaultPricePerNight.Designer.cs">
       <DependentUpon>201905011310040_AddDefaultPricePerNight.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905022001342_AddGalleries.cs" />
+    <Compile Include="Migrations\201905022001342_AddGalleries.Designer.cs">
+      <DependentUpon>201905022001342_AddGalleries.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Amenity.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -209,6 +216,7 @@
     <Compile Include="Models\ApplicationUserManager.cs" />
     <Compile Include="Models\Availability.cs" />
     <Compile Include="Models\City.cs" />
+    <Compile Include="Models\Gallery.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Pricing.cs" />
     <Compile Include="Models\RatCategory.cs" />
@@ -339,6 +347,21 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\RatCategories\Create.cshtml" />
+    <Content Include="Views\RatCategories\Delete.cshtml" />
+    <Content Include="Views\RatCategories\Details.cshtml" />
+    <Content Include="Views\RatCategories\Edit.cshtml" />
+    <Content Include="Views\RatCategories\Index.cshtml" />
+    <Content Include="Views\Reservations\Create.cshtml" />
+    <Content Include="Views\Reservations\Delete.cshtml" />
+    <Content Include="Views\Reservations\Details.cshtml" />
+    <Content Include="Views\Reservations\Edit.cshtml" />
+    <Content Include="Views\Reservations\Index.cshtml" />
+    <Content Include="Views\Ratings\Create.cshtml" />
+    <Content Include="Views\Ratings\Delete.cshtml" />
+    <Content Include="Views\Ratings\Details.cshtml" />
+    <Content Include="Views\Ratings\Edit.cshtml" />
+    <Content Include="Views\Ratings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
@@ -369,6 +392,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905011310040_AddDefaultPricePerNight.resx">
       <DependentUpon>201905011310040_AddDefaultPricePerNight.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905022001342_AddGalleries.resx">
+      <DependentUpon>201905022001342_AddGalleries.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
