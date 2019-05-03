@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using searcHestia.Models;
+using searcHestia.ViewModels;
 
 namespace searcHestia.Controllers
 {
@@ -17,7 +18,9 @@ namespace searcHestia.Controllers
         // GET: Ratings
         public ActionResult Index()
         {
-            return View(db.Ratings.ToList());
+            var rating = db.Ratings.Include(r => r.RatCategories);
+
+            return View(rating.ToList());
         }
 
         // GET: Ratings/Details/5
@@ -35,9 +38,13 @@ namespace searcHestia.Controllers
             return View(rating);
         }
 
+        [Authorize]
         // GET: Ratings/Create
-        public ActionResult Create()
+        public ActionResult Create(int resid)
         {
+            var rating = new Rating();
+            rating.RatCategories = new List<RatCategory>();
+            RateCategories(rating);
             return View();
         }
 
@@ -122,6 +129,28 @@ namespace searcHestia.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        //---------------------------------------------------------
+        // CUSTOM METHODS
+        //---------------------------------------------------------
+
+        private void RateCategories(Rating rating)
+        {
+            //var allCategories = db.RatCategories;
+            List<string> allCategories = new List<string>(new string[] { "Accuracy", "Communication", "Cleanliness", "Location" });
+            var ratingCategories = new HashSet<int>(rating.RatCategories.Select(c => c.Id));
+            var viewModel = new List<SelectedCategoriesStars>();
+            for (int i = 0; i < allCategories.Count; i++)
+            {
+                viewModel.Add(new SelectedCategoriesStars
+                {
+                    CategoryID = i,
+                    Title = allCategories[i],
+                    Picked = ratingCategories.Contains(i)
+                });
+            }
+            ViewBag.RatCategories = viewModel;
         }
     }
 }

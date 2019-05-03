@@ -5,11 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Reservations</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -70,7 +67,7 @@
                 @Html.DisplayFor(modelItem => item.RStatus)
             </td>
             <td>
-                <a href="@Url.Action("Create", "Ratings", new { id = item.Id })" class="btn btn-primary">
+                <a href="@Url.Action("Create", "Ratings", new { resid = item.Id })" class="btn btn-primary">
                     <span class="glyphicon glyphicon-star">Rate</span>
                 </a>
             </td>

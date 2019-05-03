@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using searcHestia.Models;
+using searcHestia.ViewModels;
 
 namespace searcHestia.Controllers
 {
@@ -39,10 +40,23 @@ namespace searcHestia.Controllers
         }
 
         // GET: Reservations/Create
-        public ActionResult Create()
+        public ActionResult Create(int vacid)
         {
+            var searchdata = TempData["RSearch"] as RSearchViewModel;
+            var selectedproperty = db.VacProperties.Where(x=>x.Id == vacid).ToList();
+
             ViewBag.Id = new SelectList(db.Ratings, "Id", "Id");
-            ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title");
+            ViewBag.VacPropertyId = new SelectList(selectedproperty, "Id", "Title");
+
+            if (searchdata != null) {
+                var reservations = db.Reservations.Include(r => r.VacProperty).FirstOrDefault();
+
+                reservations.OccupantsNum = searchdata.Occupants;
+                reservations.StartDate = searchdata.Arrival;
+                reservations.EndDate = searchdata.Departure;
+
+                return View(reservations);
+            }
             return View();
         }
 
