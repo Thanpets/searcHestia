@@ -160,6 +160,7 @@ namespace searcHestia.Controllers
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddToRoleAsync(user.Id, "Renter");
+
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -486,5 +487,24 @@ namespace searcHestia.Controllers
             }
         }
         #endregion
+        /////////////////////
+        public  ActionResult UpgradeRole()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpgradeRole(bool upgrade = false)
+        {
+            if (upgrade) {
+                var currentuser = await UserManager.FindByNameAsync(User.Identity.Name);
+                if (!await UserManager.IsInRoleAsync(currentuser.Id, "Owner"))
+                {
+                    await UserManager.AddToRoleAsync(currentuser.Id, "Owner");
+                }
+            }
+ 
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

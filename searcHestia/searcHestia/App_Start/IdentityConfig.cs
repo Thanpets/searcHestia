@@ -28,6 +28,21 @@ namespace searcHestia.App_Start
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login")
             });
+
+            
+            //////// CreateRoles //////// 
+            string[] roleNames = { "Admin", "Renter", "Owner" };
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new SearchestiaContext()));
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                if (!roleManager.RoleExists(roleName))
+                {
+                    roleResult = roleManager.Create(new IdentityRole(roleName));
+                }
+            }
         }
     }
 }

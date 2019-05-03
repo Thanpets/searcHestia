@@ -1,0 +1,10 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    if (!this.Context.User.IsInRole("Owner"))
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Become an Owner", "UpgradeRole", "Account", routeValues: null, htmlAttributes: new { id = "upgradeLink" })</li>
+        </ul>
+    }
+}
