@@ -28,7 +28,9 @@ namespace searcHestia.Controllers
         //[ActionName("SearchResult")]
         public ActionResult Search(RSearchViewModel search)
         {
-            var vpresult = db.VacProperties.Include(l => l.Location);
+            var vpresult = db.VacProperties.Include(l => l.Location).Where(v =>
+               String.IsNullOrEmpty(search.location) || v.Location.City.Name.Contains(search.location) ||
+               v.Location.City.Region.Name.Contains(search.location));
             TempData["RSearch"] = search;
 
             return View("SearchResult", vpresult.ToList());
