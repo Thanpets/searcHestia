@@ -22,10 +22,12 @@ namespace searcHestia.Models
 
         [Display(Name = "Check in")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "Check out")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
 
         [Display(Name = "Number of Occupants")]

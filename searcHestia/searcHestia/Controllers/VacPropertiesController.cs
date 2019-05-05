@@ -141,5 +141,14 @@ namespace searcHestia.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //////Custom Methods ///////
+        public ActionResult GetLocations(int id)
+        {
+            var locations = db.VacProperties.Include(v => v.Location)
+                .Where(v => v.Id == id).Select(v=> new { v.Title, v.Location.LatCoordinate, v.Location.LngCoordinate }).FirstOrDefault();
+           
+            return Json(locations, JsonRequestBehavior.AllowGet);
+        }
     }
 }

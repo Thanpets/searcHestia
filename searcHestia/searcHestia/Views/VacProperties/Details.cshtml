@@ -5,83 +5,131 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="row">
+    
+    <!--  Carouzel  -->>
+    
+    
+    
+    
+<</div>
 
-<div>
+
+<h2>Details</h2>
+<div class="row">
     <h4>VacProperty</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MaxOccupancy)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.MaxOccupancy)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.MaxOccupancy)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.MaxOccupancy)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.VPType)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.VPType)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.VPType)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.VPType)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PricePN)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.PricePN)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.PricePN)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.PricePN)
+            </dd>
 
-        <dt>
-            @Html.DisplayName("Region")
-        </dt>
+            <dt>
+                @Html.DisplayName("Region")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Location.City.Region.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Location.City.Region.Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayName("City")
-        </dt>
+            <dt>
+                @Html.DisplayName("City")
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Location.City.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Location.City.Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Location.Address)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Location.Address)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Location.Address)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Location.Address)
+            </dd>
 
-    </dl>
+        </dl>
+
+        <p>@Html.ActionLink("Reservation", "Create", "Reservations", new { vacid = Model.Id }, new { @class = "btn btn-primary btn-lg col-md-offset-2" })</p>
+
+    </div>
+    <div class="col-md-6">
+        <div id="map-canvas" style="position:relative; width:500px; height:300px;"></div>
+    </div>
 </div>
-
-<p>@Html.ActionLink("Reservation", "Create", "Reservations", new { vacid = Model.Id }, new { @class = "btn btn-primary col-md-offset-2" })</p>
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", null, null, null, new { href = Request.UrlReferrer })
 </p>
+
+@section Scripts {
+    <script>
+        var map = null;
+
+        function LoadMap() {
+            map = new Microsoft.Maps.Map('#map-canvas', {
+                credentials: "Bing Map Key"
+            });
+            LocationMark();
+        }
+
+        function LocationMark() {
+            var url = "/VacProperties/GetLocations/@Model.Id";
+            $.getJSON(url, function (data) {
+                    var pushpin = new Microsoft.Maps.Pushpin(map.getCenter(), {color:'blue'});
+
+                    pushpin.setLocation( new Microsoft.Maps.Location(
+                        data.LatCoordinate,
+                        data.LngCoordinate ));
+                    //var marker = new Microsoft.Maps.Pushpin(pushpin, { title: locationdata.title });
+                    map.entities.push(pushpin);
+                    map.setView({
+                        zoom: 8
+                    });
+            });
+        }
+    </script>
+    <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?callback=LoadMap" async defer>
+
+    </script>
+
+}

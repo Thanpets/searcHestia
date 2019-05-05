@@ -19,11 +19,6 @@ namespace searcHestia.Controllers
             return View();
         }
 
-        public ActionResult Search()
-        {
-            return View();
-        }
-
         [HttpPost]
         //[ActionName("SearchResult")]
         public ActionResult Search(RSearchViewModel search)
@@ -33,7 +28,7 @@ namespace searcHestia.Controllers
                v.Location.City.Region.Name.Contains(search.location));
             TempData["RSearch"] = search;
 
-            return View("SearchResult", vpresult.ToList());
+            return View(vpresult.ToList());
         }
 
 
