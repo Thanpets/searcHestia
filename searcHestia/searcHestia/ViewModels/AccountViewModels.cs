@@ -64,6 +64,14 @@ namespace searcHestia.Models
 
     public class RegisterViewModel
     {
+        [StringLength(50)]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [StringLength(50)]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
