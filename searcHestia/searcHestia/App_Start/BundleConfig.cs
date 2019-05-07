@@ -22,9 +22,19 @@ namespace searcHestia
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/widgets").Include(
+                      "~/Scripts/fullcalendar/lib/moment.min.js",      
+                      "~/Scripts/fullcalendar/fullcalendar.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-new-theme.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/Content/widgets").Include(
+                      "~/Content/fullcalendar/themes/start-jquery-ui.css",
+                      "~/Content/fullcalendar/fullcalendar.css"));
+
+            
         }
     }
 }

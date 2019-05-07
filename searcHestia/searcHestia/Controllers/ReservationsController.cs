@@ -150,5 +150,11 @@ namespace searcHestia.Controllers
             }
             base.Dispose(disposing);
         }
+
+        ///// Custom Methods /////
+        public ActionResult Calendar()
+        {
+            return View();
+        }
     }
 }

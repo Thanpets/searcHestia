@@ -1,0 +1,63 @@
+﻿@section Styles{
+    
+    <link href="http://code.jquery.com/ui/1.12.1/themes/start/jquery-ui.css" rel="stylesheet">
+    
+    }
+
+
+@{
+    ViewBag.Title = "Calendar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row row-centered">
+    <div class="col-md-9 col-centered">
+        <!-- Date -->
+        <div class="form-group">
+            <h3>Reservations</h3>
+            <hr>
+            <!-- -->
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+<script>
+    //var events = '@Url.HttpRouteUrl("DefaultApi", new { controller = "Calendar" })';
+    //var events = JSON.stringify(@ViewBag.reservations);
+    //var events = @Html.Raw(Json.Encode(ViewBag.reservations));
+
+  	$(document).ready(function() {
+
+            var $calendar = $("#calendar").fullCalendar({
+
+                // Start of calendar options
+                header: {
+                    left: 'title',
+                    center: '',
+                    right: 'today,month,agendaDay,agendaWeek prev,next'
+                },
+                theme: true,
+                themeSystem: 'jquery-ui',
+                /* if i do not insert time, the event will be created with a default time (00:00:00 UTC) but the client (browser) will append my timezone... (hide "12a") */
+                eventRender: function (event, element) {
+                    element.find('.fc-time').hide();
+                },
+                eventSources: [
+                    {
+                        url: ""
+                    }
+                ],
+                editable: false,
+                eventLimit: true,
+                events: '@Url.HttpRouteUrl("DefaultApi", new { controller = "Calendar" })',
+
+            });
+
+     });
+
+</script>
+
+}

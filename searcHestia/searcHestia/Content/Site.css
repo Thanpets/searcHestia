@@ -106,3 +106,13 @@ input:checked + .slider:before {
     .slider.round:before {
         border-radius: 50%;
     }
+
+/* centered columns styles */
+.row-centered {
+    text-align: center;
+}
+
+.col-centered {
+    display: inline-block;
+    float: none;
+}
