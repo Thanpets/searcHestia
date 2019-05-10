@@ -45,5 +45,30 @@ namespace searcHestia.Controllers
 
             return View();
         }
+
+        ///////////////
+
+        public ActionResult Dashboard()
+        {
+            List<Reservation> reservations = null;
+
+            if (User.Identity.IsAuthenticated)
+            {
+                if (User.IsInRole("Owner"))
+                {
+                    reservations = db.Reservations.Include(r => r.VacProperty.ApplicationUser)
+                       .Where(r => r.VacProperty.ApplicationUser.UserName.Equals(User.Identity.Name)
+                       && r.RStatus == RStatus.Pending).ToList();
+                }
+                else
+                {
+                    reservations = db.Reservations.Include(r => r.VacProperty)
+                        .Where(r => r.ApplicationUser.UserName.Equals(User.Identity.Name)).ToList();
+                }
+                return View(reservations);
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }

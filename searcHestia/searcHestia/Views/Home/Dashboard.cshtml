@@ -1,0 +1,46 @@
+﻿@model IEnumerable<searcHestia.Models.Reservation>
+
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Dashboard</h2>
+<div class="row">
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class=" panel-heading">Pending</div>
+            <div class="panel-body">
+                @foreach (var item in Model)
+                {
+                    <div class="item">
+                        <img src="https://www.flightonmobile.com/assets/images/user.png" alt="user image" class="img-responsive img-rounded"
+                             style="max-height: 50px; max-width: 50px;">
+                        <p>
+                            <a href="#">
+                                <small class="text-muted pull-right"><span class="glyphicon glyphicon-time"></span>@item.DateBooked</small>
+                                @item.ApplicationUser.FirstName  @item.ApplicationUser.LastName
+                            </a>
+                            Reservation @item.Id
+                        </p>
+
+                        <div class="row">
+                            <h4 style="margin-left:15px">Commends:</h4>
+                            <div class="col-md-8">
+                                <p>@item.CustComments</p>
+                                <p>Sample: I would like to discuss about the arrival.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="pull-right">
+                                    <a class="btn btn-sm btn-primary" href="/Reservations/StatusUpdate/@item.Id">Respond</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.attachment -->
+                    </div>
+                    <hr>
+                }
+            </div>
+        </div>
+    </div>
+</div>

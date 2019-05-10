@@ -34,10 +34,14 @@ namespace searcHestia.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             VacProperty vacProperty = db.VacProperties.Include(l => l.Location.City.Region).Where(v => v.Id == id).FirstOrDefault();
+
             if (vacProperty == null)
             {
                 return HttpNotFound();
             }
+
+            vacProperty.Galleries = db.Galleries.Include(v => v.VacProperty).Where(v => v.VacPropertyId == id).ToList();
+
             return View(vacProperty);
         }
 

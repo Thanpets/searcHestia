@@ -156,5 +156,19 @@ namespace searcHestia.Controllers
         {
             return View();
         }
+
+        public ActionResult StatusUpdate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Reservation reservation = db.Reservations.Include(r => r.VacProperty).Where(r => r.Id == id).FirstOrDefault();
+            if (reservation == null)
+            {
+                return HttpNotFound();
+            }
+            return View(reservation);
+        }
     }
 }
