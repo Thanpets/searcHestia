@@ -254,6 +254,8 @@
     <Content Include="Content\fullcalendar\fullcalendar.print.css" />
     <Content Include="Content\fullcalendar\fullcalendar.print.min.css" />
     <Content Include="Content\fullcalendar\themes\start-jquery-ui.css" />
+    <Content Include="Content\img\logo-about.png" />
+    <Content Include="Content\img\logo-menu.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

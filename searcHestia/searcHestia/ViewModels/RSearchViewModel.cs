@@ -25,6 +25,14 @@ namespace searcHestia.ViewModels
         [Range(1,10, ErrorMessage = "Only positive number allowed")]
         public int Occupants { get; set; }
 
-
+        /*IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            if (Departure < Arrival)
+            {
+                yield return new ValidationResult("Check-out must be greater than Check-in");
+            }
+        }
+        */
     }
+
 }
