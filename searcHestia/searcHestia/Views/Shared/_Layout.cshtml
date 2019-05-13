@@ -22,7 +22,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Dashboard", "Dashboard", "Home")</li>
+                    <li>@Html.ActionLink("My reservations", "Index", "Reservations")</li>
+
+
+                    @if (this.Context.User.IsInRole("Owner"))
+                    {
+                        <li>@Html.ActionLink("My houses", "Index", "VacProperties")</li>
+                        <li>@Html.ActionLink("Calendar", "Calendar", "Reservations")</li>
+                    }
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>

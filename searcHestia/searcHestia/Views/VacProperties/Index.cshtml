@@ -32,6 +32,7 @@
             @Html.DisplayNameFor(model => model.PricePN)
         </th>
         <th></th>
+        <th></th>
     </tr>
 
 @foreach (var item in Model) {
@@ -53,6 +54,18 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PricePN)
+        </td>
+        <td>
+           
+            <a href="@Url.Action("Index", "Availabilities", new  {vacId = item.Id } )" class="btn btn-link">
+                Availabilities
+                <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+            </a>
+            
+            <a href="@Url.Action("Index", "Pricings",new  {vacId = item.Id } )" class="btn btn-link">
+                Pricings
+                <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+            </a>
         </td>
         <td>
             @Html.ActionLink("Photos", "Index", "Galleries", new { vacid = item.Id }, null) |

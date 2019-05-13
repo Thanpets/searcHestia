@@ -180,6 +180,7 @@
     <Compile Include="Controllers\GalleriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
+    <Compile Include="Controllers\PricingsController.cs" />
     <Compile Include="Controllers\RatCategoriesController.cs" />
     <Compile Include="Controllers\RatingsController.cs" />
     <Compile Include="Controllers\RegionsController.cs" />
@@ -408,6 +409,11 @@
     <Content Include="Views\Galleries\Details.cshtml" />
     <Content Include="Views\Galleries\Edit.cshtml" />
     <Content Include="Views\Galleries\Index.cshtml" />
+    <Content Include="Views\Pricings\Create.cshtml" />
+    <Content Include="Views\Pricings\Delete.cshtml" />
+    <Content Include="Views\Pricings\Details.cshtml" />
+    <Content Include="Views\Pricings\Edit.cshtml" />
+    <Content Include="Views\Pricings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />

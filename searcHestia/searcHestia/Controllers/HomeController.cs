@@ -25,10 +25,14 @@ namespace searcHestia.Controllers
         {
             var vpresult = db.VacProperties.Include(l => l.Location).Where(v =>
                String.IsNullOrEmpty(search.location) || v.Location.City.Name.Contains(search.location) ||
-               v.Location.City.Region.Name.Contains(search.location));
+               v.Location.City.Region.Name.Contains(search.location)).ToList();
+            foreach (var item in vpresult)
+            {
+                item.Galleries = db.Galleries.Include(v => v.VacProperty).Where(v => v.VacPropertyId == item.Id).ToList();
+            }
             TempData["RSearch"] = search;
 
-            return View(vpresult.ToList());
+            return View(vpresult);
         }
 
 
