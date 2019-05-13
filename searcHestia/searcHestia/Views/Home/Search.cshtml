@@ -4,28 +4,39 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<p style="margin-top:30px">
+    <h4>@Html.ActionLink("New Search", null, null, null, new { href = Request.UrlReferrer })</h4>
+</p>
 
-<h3>Find your Vacation Property</h3>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Search</h3>
-    </div>
+<div class="panel">
     <div class="panel-body">
-        <div class="row">
+        <div class="row display-flex">
             @foreach (var item in Model)
             {
                 <div class="col-xs-6 col-md-3">
-                    <a href="@Url.Action("Details", "VacProperties", new { id = item.Id })" class="thumbnail">
-                        <img src="https://images.unsplash.com/photo-1475855581690-80accde3ae2b" alt="Pic">
-                    </a>
-                    <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
-                    @Html.DisplayFor(modelItem => item.Location.City.Name)
-                    @Html.DisplayFor(modelItem => item.VPType)
-                    @Html.DisplayFor(modelItem => item.PricePN) €
+                    <div class="thumbnail">
+                        @if (item.Galleries.Count() == 0)
+                        {
+                            <a href="@Url.Action("Details", "VacProperties", new { id = item.Id })">
+                                <img src="https://www.nccaom.org/wp-content/uploads/2016/07/default-placeholder-image.jpg" alt="Pic">
+                            </a>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Details", "VacProperties", new { id = item.Id })">
+                                <img src="@Url.Content(item.Galleries.FirstOrDefault().Path + item.Galleries.FirstOrDefault().Name)" alt="@item.Galleries.FirstOrDefault().Name">
+                            </a>
+                        }
+                        <div class="caption">
+                            <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
+                            @Html.DisplayFor(modelItem => item.Location.City.Name)
+                            @Html.DisplayFor(modelItem => item.VPType)
+                            @Html.DisplayFor(modelItem => item.PricePN) €
+                        </div>
+                    </div>
                 </div>
             }
         </div>
     </div>
-    <div class="panel-footer">Panel footer</div>
+    <div class="panel-footer">End of search</div>
 </div>
