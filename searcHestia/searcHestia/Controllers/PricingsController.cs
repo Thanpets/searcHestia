@@ -15,9 +15,10 @@ namespace searcHestia.Controllers
         private SearchestiaContext db = new SearchestiaContext();
 
         // GET: Pricings
-        public ActionResult Index(int vacId)
+        public ActionResult Index(int vacid)
         {
-            var pricings = db.Pricings.Include(p => p.VacProperty).Where(a => a.VacPropertyId == vacId);
+            var pricings = db.Pricings.Include(p => p.VacProperty).Where(a => a.VacPropertyId == vacid);
+            TempData["VacId"] = vacid;
             return View(pricings.ToList());
         }
 
@@ -39,7 +40,11 @@ namespace searcHestia.Controllers
         // GET: Pricings/Create
         public ActionResult Create()
         {
-            ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title");
+            var vacid = Convert.ToInt32(TempData["VacId"]);
+            var selectedproperty = db.VacProperties.Where(x => x.Id == vacid).ToList();
+
+            ViewBag.VacPropertyId = new SelectList(selectedproperty, "Id", "Title");
+            //ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title");
             return View();
         }
 
@@ -54,7 +59,7 @@ namespace searcHestia.Controllers
             {
                 db.Pricings.Add(pricing);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { vacid = pricing.VacPropertyId });
             }
 
             ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title", pricing.VacPropertyId);
@@ -73,7 +78,9 @@ namespace searcHestia.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title", pricing.VacPropertyId);
+
+            ViewBag.VacPropertyId = new SelectList(db.VacProperties.Where(x => x.Id == pricing.VacPropertyId).ToList(), "Id", "Title");
+            //ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title", pricing.VacPropertyId);
             return View(pricing);
         }
 
@@ -88,7 +95,7 @@ namespace searcHestia.Controllers
             {
                 db.Entry(pricing).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { vacid = pricing.VacPropertyId });
             }
             ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title", pricing.VacPropertyId);
             return View(pricing);
@@ -117,7 +124,7 @@ namespace searcHestia.Controllers
             Pricing pricing = db.Pricings.Find(id);
             db.Pricings.Remove(pricing);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { vacid = pricing.VacPropertyId });
         }
 
         protected override void Dispose(bool disposing)

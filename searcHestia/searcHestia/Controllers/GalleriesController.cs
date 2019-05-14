@@ -21,6 +21,7 @@ namespace searcHestia.Controllers
             var galleries = db.Galleries.Include(g => g.VacProperty)
                 .Where(g => g.VacPropertyId == vacid);
 
+            TempData["VacId"] = vacid;
             return View(galleries.ToList());
         }
 
@@ -42,7 +43,10 @@ namespace searcHestia.Controllers
         // GET: Galleries/Create
         public ActionResult Create()
         {
-            ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title");
+            var vacid = Convert.ToInt32(TempData["VacId"]);
+            var selectedproperty = db.VacProperties.Where(x => x.Id == vacid).ToList();
+            ViewBag.VacPropertyId = new SelectList(selectedproperty, "Id", "Title");
+            //ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title");
             return View();
         }
 
@@ -110,7 +114,7 @@ namespace searcHestia.Controllers
                 gallery.Name = fileName;// "fff";
                 db.Galleries.Add(gallery);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { vacid = gallery.VacPropertyId });
             }
 
             return View(gallery);
@@ -143,7 +147,7 @@ namespace searcHestia.Controllers
             {
                 db.Entry(gallery).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { vacid = gallery.VacPropertyId });
             }
             ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title", gallery.VacPropertyId);
             return View(gallery);
@@ -172,7 +176,7 @@ namespace searcHestia.Controllers
             Gallery gallery = db.Galleries.Find(id);
             db.Galleries.Remove(gallery);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { vacid = gallery.VacPropertyId });
         }
 
         protected override void Dispose(bool disposing)

@@ -29,9 +29,9 @@
                         }
                         <div class="caption">
                             <h4>@Html.DisplayFor(modelItem => item.Title)</h4>
-                            @Html.DisplayFor(modelItem => item.Location.City.Name)
-                            @Html.DisplayFor(modelItem => item.VPType)
-                            @Html.DisplayFor(modelItem => item.PricePN) €
+                            City: @Html.DisplayFor(modelItem => item.Location.City.Name) <br>
+                            Type Room: @Html.DisplayFor(modelItem => item.VPType) <br>
+                            Price: @Html.DisplayFor(modelItem => item.PricePN) €
                         </div>
                     </div>
                 </div>

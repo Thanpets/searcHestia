@@ -55,6 +55,13 @@ namespace searcHestia.Controllers
                 reservations.StartDate = searchdata.Arrival;
                 reservations.EndDate = searchdata.Departure;
 
+                var price = db.Pricings.Include(p => p.VacProperty).Where(p => p.VacPropertyId == vacid &&
+                              (searchdata.Arrival >= p.StartDate && searchdata.Arrival <= p.EndDate)).FirstOrDefault();
+                if (price != null)
+                {
+                    reservations.PricePN = price.Price;
+                }
+
                 return View(reservations);
             }
             return View();

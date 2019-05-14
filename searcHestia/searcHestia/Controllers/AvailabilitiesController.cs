@@ -15,10 +15,10 @@ namespace searcHestia.Controllers
         private SearchestiaContext db = new SearchestiaContext();
 
         // GET: Availabilities
-        public ActionResult Index(int vacId)
+        public ActionResult Index(int vacid)
         {
-
-            var availabilities = db.Availabilities.Include(a => a.VacProperty).Where(a=>a.VacPropertyId==vacId);
+            var availabilities = db.Availabilities.Include(a => a.VacProperty).Where(a=>a.VacPropertyId==vacid);
+            TempData["VacId"] = vacid;
             return View(availabilities.ToList());
         }
 
@@ -40,7 +40,10 @@ namespace searcHestia.Controllers
         // GET: Availabilities/Create
         public ActionResult Create()
         {
-            ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title");
+            var vacid = Convert.ToInt32(TempData["VacId"]);
+            var selectedproperty = db.VacProperties.Where(x => x.Id == vacid).ToList();
+            ViewBag.VacPropertyId = new SelectList(selectedproperty, "Id", "Title");
+            //ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title");
             return View();
         }
 
@@ -55,7 +58,7 @@ namespace searcHestia.Controllers
             {
                 db.Availabilities.Add(availability);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { vacid = availability.VacPropertyId });
             }
 
             ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title", availability.VacPropertyId);
@@ -74,7 +77,7 @@ namespace searcHestia.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title", availability.VacPropertyId);
+            ViewBag.VacPropertyId = new SelectList(db.VacProperties.Where(x => x.Id == availability.VacPropertyId).ToList(), "Id", "Title", availability.VacPropertyId);
             return View(availability);
         }
 
@@ -89,7 +92,7 @@ namespace searcHestia.Controllers
             {
                 db.Entry(availability).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", new { vacid = availability.VacPropertyId });
             }
             ViewBag.VacPropertyId = new SelectList(db.VacProperties, "Id", "Title", availability.VacPropertyId);
             return View(availability);
@@ -118,7 +121,7 @@ namespace searcHestia.Controllers
             Availability availability = db.Availabilities.Find(id);
             db.Availabilities.Remove(availability);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { vacid = availability.VacPropertyId });
         }
 
         protected override void Dispose(bool disposing)

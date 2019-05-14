@@ -23,9 +23,19 @@ namespace searcHestia.Controllers
         //[ActionName("SearchResult")]
         public ActionResult Search(RSearchViewModel search)
         {
-            var vpresult = db.VacProperties.Include(l => l.Location).Where(v =>
+            var vpresult = db.VacProperties.Include(l => l.Location.City).Where(v =>
                String.IsNullOrEmpty(search.location) || v.Location.City.Name.Contains(search.location) ||
-               v.Location.City.Region.Name.Contains(search.location)).ToList();
+               v.Location.City.Region.Name.Contains(search.location) &&
+
+                search.Occupants == 0 || search.Occupants <= v.MaxOccupancy &&
+
+                (db.Availabilities
+                .Where(o => (v.Id == o.VacPropertyId) && (search.Arrival >= o.StartDate && search.Arrival <= o.EndDate) && (search.Departure >= o.StartDate && search.Departure <= o.EndDate))
+                .Select(o => o.VacPropertyId).ToList().Contains(v.Id)) &&
+                !(db.Reservations
+                .Where(r => (v.Id == r.VacPropertyId) && ((search.Arrival >= r.StartDate && search.Arrival <= r.EndDate) || (search.Departure >= r.StartDate && search.Departure <= r.EndDate)) && (search.Arrival != r.EndDate))
+                .Select(s => s.VacPropertyId).ToList().Contains(v.Id))).Select(vac => vac).Distinct().ToList();
+
             foreach (var item in vpresult)
             {
                 item.Galleries = db.Galleries.Include(v => v.VacProperty).Where(v => v.VacPropertyId == item.Id).ToList();

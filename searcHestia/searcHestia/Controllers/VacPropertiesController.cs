@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using searcHestia.Models;
+using searcHestia.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Security.Claims;
 
@@ -51,7 +52,13 @@ namespace searcHestia.Controllers
         {
             ViewBag.CityId = new SelectList(db.Cities, "Id", "Name");
             ViewBag.LocationId = new SelectList(db.Locations, "Id", "Address");
-            return View();
+
+            var vproperty = new VacProperty();
+            vproperty.Amenities = new List<Amenity>();
+            PopulateSelectedAmenities(vproperty);
+            var vmcreateproperty = new CreatePropertyViewModel();
+            vmcreateproperty.CitiesSelectListItems = new SelectList(db.Cities, "Id", "Name");
+            return View(vmcreateproperty);
         }
 
         // POST: VacProperties/Create
@@ -59,23 +66,50 @@ namespace searcHestia.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Description,LocationId,MaxOccupancy,VPType,PricePN")] VacProperty vacProperty, string address, string zipcode)
+        public ActionResult Create(CreatePropertyViewModel createproperty, double? lat, double? lng, string[] selectedAmenities)
         {
+            if (selectedAmenities != null)
+            {
+                createproperty.VacProperty.Amenities = new List<Amenity>();
+                foreach (var amenity in selectedAmenities)
+                {
+                    var amenityToAdd = db.Amenities.Find(int.Parse(amenity));
+                    createproperty.VacProperty.Amenities.Add(amenityToAdd);
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                //var currentUserId = User.Identity.GetUserId(); //get id after redirecting only
-                vacProperty.ApplicationUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+                Location location = db.Locations
+                    .Include(l => l.City)
+                    .Where(l => l.CityId == createproperty.Location.CityId)
+                    .Where(l => l.ZIPCode.Equals(createproperty.Location.ZIPCode))
+                    .Where(l => l.Address.Equals(createproperty.Location.Address))
+                    .FirstOrDefault();
 
-                //var Grant = SignInManager.AuthenticationManager.AuthenticationResponseGrant;
-                //string UserId = Grant.Identity.GetUserId();
+                if (location == null)
+                {
+                    createproperty.Location.LatCoordinate = lat;
+                    createproperty.Location.LngCoordinate = lng;
+                    db.Locations.Add(createproperty.Location);
+                }
+                else
+                {
+                    createproperty.Location = location;
+                }
 
-                db.VacProperties.Add(vacProperty);
+                //var currentUserId = User.Identity.GetUserId();
+                createproperty.VacProperty.ApplicationUser = db.Users.FirstOrDefault(x => x.UserName == User.Identity.Name);
+
+                createproperty.VacProperty.LocationId = createproperty.Location.Id;
+                db.VacProperties.Add(createproperty.VacProperty);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.LocationId = new SelectList(db.Locations, "Id", "Address", vacProperty.LocationId);
-            return View(vacProperty);
+            PopulateSelectedAmenities(createproperty.VacProperty);
+            ViewBag.CityId = new SelectList(db.Regions, "Id", "Name", createproperty.VacProperty.Location.CityId);
+            return View(createproperty.VacProperty);
         }
 
         // GET: VacProperties/Edit/5
@@ -146,7 +180,57 @@ namespace searcHestia.Controllers
             base.Dispose(disposing);
         }
 
-        //////Custom Methods ///////
+        //---------------------------------------------------------
+        // CUSTOM METHODS
+        //---------------------------------------------------------
+
+        private void PopulateSelectedAmenities(VacProperty vproperty)
+        {
+            var allAmenities = db.Amenities;
+            var vpropertyAmenities = new HashSet<int>(vproperty.Amenities.Select(c => c.Id));  //a set that contains no duplicate elements
+            var viewModel = new List<SelectedAmenityData>();
+            foreach (var amenity in allAmenities)
+            {
+                viewModel.Add(new SelectedAmenityData
+                {
+                    AmenityID = amenity.Id,
+                    Title = amenity.Title,
+                    Picked = vpropertyAmenities.Contains(amenity.Id)
+                });
+            }
+            ViewBag.Amenities = viewModel;
+        }
+
+        private void UpdateVacPropertyAmenities(string[] selectedAmenities, VacProperty vpropertyToUpdate)
+        {
+            if (selectedAmenities == null)
+            {
+                vpropertyToUpdate.Amenities = new List<Amenity>();
+                return;
+            }
+
+            var selectedAmenitiesHS = new HashSet<string>(selectedAmenities);
+            var vpropertyAmenities = new HashSet<int>
+                (vpropertyToUpdate.Amenities.Select(c => c.Id));
+            foreach (var amenity in db.Amenities)
+            {
+                if (selectedAmenitiesHS.Contains(amenity.Id.ToString()))
+                {
+                    if (!vpropertyAmenities.Contains(amenity.Id))
+                    {
+                        vpropertyToUpdate.Amenities.Add(amenity);
+                    }
+                }
+                else
+                {
+                    if (vpropertyAmenities.Contains(amenity.Id))
+                    {
+                        vpropertyToUpdate.Amenities.Remove(amenity);
+                    }
+                }
+            }
+        }
+
         public ActionResult GetLocations(int id)
         {
             var locations = db.VacProperties.Include(v => v.Location)

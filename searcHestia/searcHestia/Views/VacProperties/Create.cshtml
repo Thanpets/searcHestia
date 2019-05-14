@@ -1,4 +1,4 @@
-﻿@model searcHestia.Models.VacProperty
+﻿@model searcHestia.ViewModels.CreatePropertyViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -7,87 +7,191 @@
 
 <h2>Create</h2>
 
+<div class="row">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+        <h4>Vacation Property</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-<div class="form-horizontal">
-    <h4>VacProperty</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        <div class="form-row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VacProperty.Title, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.VacProperty.Title, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.VacProperty.Title) } })
+                    @Html.ValidationMessageFor(model => model.VacProperty.Title, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VacProperty.Description, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.VacProperty.Description, new { htmlAttributes = new { @class = "form-control", @style = "resize: none;", rows = 4 } })
+                    @Html.ValidationMessageFor(model => model.VacProperty.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VacProperty.VPType, htmlAttributes: new { @class = "control-label" })
+                    @Html.EnumDropDownListFor(model => model.VacProperty.VPType, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.VacProperty.VPType, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VacProperty.MaxOccupancy, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.VacProperty.MaxOccupancy, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VacProperty.MaxOccupancy, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.VacProperty.PricePN, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.VacProperty.PricePN, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VacProperty.PricePN, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @style = "resize: none;", rows = 3 } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
+        <div class="form-row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Amenities</label>
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+                                List<searcHestia.ViewModels.SelectedAmenityData> amenities = ViewBag.Amenities;
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.MaxOccupancy, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.MaxOccupancy, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.MaxOccupancy, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                                foreach (var amenity in amenities)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                    @:</tr><tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedAmenities"
+                                               class="custom-control-input"
+                                               value="@amenity.AmenityID"
+                                               @(Html.Raw(amenity.Picked ? "checked=\"checked\"" : "")) />
+                                        @amenity.AmenityID @:  @amenity.Title
+                                    @:</td>
+                                }
+                            @:</tr>
+                            }
+                        </table>
+                    </div>
+                </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.VPType, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EnumDropDownListFor(model => model.VPType, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.VPType, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PricePN, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.PricePN, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.PricePN, "", new { @class = "text-danger" })
-        </div>
-    </div>
+            <div class="form-row" style="padding-top: 150px">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(model => model.Location.City.Id, "Region", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("Location.CityId", Model.CitiesSelectListItems, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Location.City.Id, "", new { @class = "text-danger" })
+                </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Location.City.Id, "City", htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("CityId", null, htmlAttributes: new { @class = "form-control", @id = "cityid" })
-            @Html.ValidationMessageFor(model => model.Location.City.Id, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                <div class="form-group col-md-2">
+                    @Html.LabelFor(model => model.Location.ZIPCode, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Location.ZIPCode, new { htmlAttributes = new { @class = "form-control", @id = "zipid" } })
+                    @Html.ValidationMessageFor(model => model.Location.ZIPCode, "", new { @class = "text-danger" })
+                </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Location.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("LocationId", null, htmlAttributes: new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.Location.Address, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.Location.Address, htmlAttributes: new { @class = "control-label" })
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false" id="searchbtn">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </span>
+                        <div id='printoutPanel'></div>
+                        <div id='searchBoxContainer'>
+                            @Html.EditorFor(model => model.Location.Address, new { htmlAttributes = new { @class = "form-control", @id = "addressid" } })
+                            @Html.ValidationMessageFor(model => model.Location.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <div id="map-canvas" style="position:relative; width:600px; height:600px;"></div>
+            <div class="form-group">
+                <div class="col-md-6" style="background-color:#f5f5f5">
+                    <div id="map-canvas" style="width:50vw; height: 50vh;"></div>
+                    <input type="hidden" id="lat" name="lat" />
+                    <input type="hidden" id="lng" name="lng" />
+                </div>
+            </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        }
 </div>
-}
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+
+<div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Adresses</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Modal Body</p>
+                    @Html.ListBox("LocationId", null, new { @class = "form-control", @id = "seladdress" })
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" id="btnModalSubmit">Select</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    <!--
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJOZd-P3bAJXBAYtfryQT_GTv61uRehMs&callback=initMap"
+            async defer></script>
+         -->
+
+    <script type='text/javascript'>
+        function loadMapScenario() {
+            var map = new Microsoft.Maps.Map(document.getElementById('map-canvas'), {
+                /* No need to set credentials if already passed in URL */
+                center: new Microsoft.Maps.Location(40.606209, 22.222071),
+                zoom: 12
+            });
+            Microsoft.Maps.loadModule('Microsoft.Maps.AutoSuggest', function () {
+                var options = {
+                    maxResults: 4,
+                    map: map
+                };
+                var manager = new Microsoft.Maps.AutosuggestManager(options);
+                manager.attachAutosuggest('#addressid', '#searchBoxContainer', selectedSuggestion);
+            });
+            function selectedSuggestion(suggestionResult) {
+                map.entities.clear();
+                map.setView({ bounds: suggestionResult.bestView });
+                var pushpin = new Microsoft.Maps.Pushpin(suggestionResult.location);
+                map.entities.push(pushpin);
+                document.getElementById('addressid').innerHTML = suggestionResult.formattedSuggestion;
+                document.getElementById('lat').value = suggestionResult.location.latitude;
+                document.getElementById('lng').value = suggestionResult.location.longitude;
+            }
+
+        }
+    </script>
+    <script type="text/javascript" src="https://www.bing.com/api/maps/mapcontrol?key=AkEMvfsA2A7R5C4B1IJm_H8yWlzzoqE5dBlWd0gFiAGZKdVi3O4OJZkY_UEnmev5&callback=loadMapScenario" async defer>
+    </script>
+
 
 }
-
