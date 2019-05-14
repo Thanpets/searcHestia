@@ -177,5 +177,21 @@ namespace searcHestia.Controllers
             }
             return View(reservation);
         }
+
+        [HttpPost]
+        public ActionResult StatusUpdate(int vacid, bool accept = false)
+        {
+            if (accept)
+            {              
+                Reservation reservation = db.Reservations.Include(r => r.VacProperty).Where(r => r.VacPropertyId == vacid).FirstOrDefault();
+                if (ModelState.IsValid)
+                {
+                    reservation.RStatus = RStatus.Accepted;
+                    db.Entry(reservation).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+            return RedirectToAction("Dashboard", "Home");
+        }
     }
 }

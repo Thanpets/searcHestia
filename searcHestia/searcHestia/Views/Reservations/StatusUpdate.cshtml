@@ -86,26 +86,31 @@
 
     </dl>
 </div>
-@if (this.Context.User.IsInRole("Owner"))
+@using (Html.BeginForm())
 {
-    <div class="row">
-        <div class="form-group">
-            <label class="control-label col-md-2">Accept Reservation</label>
-            <div class="col-md-10">
-                <div class="checkbox">
-                    <label class="switch">
-                        <input type="checkbox" name="upgrade" value="true" data-toggle="toggle" data-size="large">
-                        <span class="slider round"></span>
-                    </label>
+    @Html.AntiForgeryToken()
+    if (this.Context.User.IsInRole("Owner"))
+    {
+        <div class="row">
+            <div class="form-group">
+                <label class="control-label col-md-2">Accept Reservation</label>
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        <label class="switch">
+                            <input type="checkbox" name="accept" value="true" data-toggle="toggle" data-size="large">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="vacid" value=@Model.VacPropertyId />
+            <div class="form-group" style="margin-top:50px">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Submit" class="btn btn-default" />
                 </div>
             </div>
         </div>
-        <div class="form-group" style="margin-top:50px">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Submit" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+    }
 }
 
 <p>

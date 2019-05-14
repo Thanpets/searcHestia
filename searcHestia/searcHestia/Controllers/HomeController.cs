@@ -24,10 +24,10 @@ namespace searcHestia.Controllers
         public ActionResult Search(RSearchViewModel search)
         {
             var vpresult = db.VacProperties.Include(l => l.Location.City).Where(v =>
-               String.IsNullOrEmpty(search.location) || v.Location.City.Name.Contains(search.location) ||
-               v.Location.City.Region.Name.Contains(search.location) &&
+               (String.IsNullOrEmpty(search.location) || v.Location.City.Name.Contains(search.location) ||
+               v.Location.City.Region.Name.Contains(search.location)) &&
 
-                search.Occupants == 0 || search.Occupants <= v.MaxOccupancy &&
+                (search.Occupants == 0 || search.Occupants <= v.MaxOccupancy) &&
 
                 (db.Availabilities
                 .Where(o => (v.Id == o.VacPropertyId) && (search.Arrival >= o.StartDate && search.Arrival <= o.EndDate) && (search.Departure >= o.StartDate && search.Departure <= o.EndDate))
